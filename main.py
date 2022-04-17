@@ -9,16 +9,21 @@ from kivy.clock import Clock
 
 from datetime import datetime
 from pyqrcode import create
-import os.path, sys
+import os.path, sys, os
 
 FOLDER_SAVE_QR = '/sdcard/GeradorQR/'
+PREFIX_FILE = 'gerador_qr-'
 
-if sys.platform == 'win32':
-	FOLDER_SAVE_QR = 'GeradorRQR/'
+
+if sys.platform.startswith('win'):
+	# muda a pasta que serão salvos os qr code gerado
+	folder_docs = os.environ['USERPROFILE'] + '\\Documents\\'
+	FOLDER_SAVE_QR = f'{folder_docs}GeradorQR\\'
+	# define um tamanho padrão para tela
 	Window.size = (400, 620)
 
+
 class Inicial(Screen):
-	global FOLDER_SAVE_QR
 	""" Tela Inicial do App """
 	
 	def gera_codigo(self):
@@ -28,11 +33,11 @@ class Inicial(Screen):
 		self.qr = create(texto)
 
 		date = datetime.now().strftime('%Y%m%d-%H%M')
-		self.nome_arquivo = f'{FOLDER_SAVE_QR}geradorqr-{date}.png'
+		self.nome_arquivo = f'{FOLDER_SAVE_QR}{PREFIX_FILE}{date}.png'
 		
 		sufixo = 1
 		while os.path.exists(self.nome_arquivo):
-			size_name = len(f'{FOLDER_SAVE_QR}geradorqr-{date}')
+			size_name = len(f'{FOLDER_SAVE_QR}{PREFIX_FILE}{date}')
 			
 			self.nome_arquivo = f'{self.nome_arquivo[:size_name]}({sufixo}).png' # adciona sufixo (num)
 			sufixo += 1
