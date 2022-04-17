@@ -1,0 +1,45 @@
+<Inicial>:
+	name: 'Inicio'
+	FloatLayout:
+		orientation: 'vertical'
+		id: content
+		MDToolbar:
+			title: 'Gerador QR'
+			pos_hint: {'top':1}
+		BoxLayout:
+			orientation: 'vertical'
+			size_hint: .9, .24
+			pos_hint: {'center_x':.5, 'center_y':.7}
+			padding: dp(15)
+			spacing: dp(10)
+			MDTextField:
+				hint_text: 'Texto a ser gerado'
+				size_hint: 1, .6
+				id: palavra
+				
+			MDRaisedButton:
+				pos_hint: {'center_x':.5, 'center_y':.5}
+				text: 'Gerar'
+				size_hint: .6 , .4
+				on_release: root.gera_codigo()
+
+<ExibeCodigo>:
+	size_hint: .8, .5
+	pos_hint: {'x':.1, 'y':.05}
+	orientation: 'vertical'
+	BoxLayout:
+		size_hint: 1, .12
+		MDLabel:
+			size_hint_x: 1.4
+			text: 'Codigo QR Gerado'
+			halign: 'center'
+			text_style: 'Caption1'
+		MDIconButton:
+			icon: 'close'
+			on_release: root.close()
+	Image:
+		size_hint: 1, .88
+		id: image
+		allow_stretch: True
+
+	
